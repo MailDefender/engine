@@ -1,0 +1,20 @@
+{
+    "rules": {
+        "SampleCategory": [
+            {
+                "name": "Foo",
+                "uuid": "cff764e0-135c-45a9-9861-5ec3614f0d82",
+                "destination": "Bar", // => it will be "Inbox.MailDefender.Bar
+                "criteria": [
+                    {
+                        "type": "contains",
+                        "input": "sender",
+                        "values": [
+                            "hello@example.foo"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

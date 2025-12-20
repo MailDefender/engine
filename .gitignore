@@ -1,0 +1,3 @@
+.env
+rules/*
+!rules/samples.json

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>✉️ MailDefender – Validation Reminder</title>
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #4a4a4a; margin: 10; padding: 0; background-color: #fafafa; }
+        .container { max-width: 1000px; margin: 40px auto; background-color: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }
+        .header { background: linear-gradient(135deg, #1e88e5, #0d47a1); padding: 30px; text-align: center; color: white; }
+        .logo { font-size: 32px; font-weight: 700; letter-spacing: 2px; }
+        .content { display: flex; flex-wrap: nowrap; gap: 30px; padding: 30px; }
+        .language-column { flex: 1; background-color: #fefefe; border-radius: 8px; padding: 25px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; }
+        .language-title { font-size: 18px; font-weight: 600; color: #1e88e5; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        h2 { font-size: 24px; color: #2c3e50; margin-bottom: 15px; }
+        p { font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 18px; }
+        .highlight { font-weight: 600; color: #2c3e50; }
+        .button-container { margin-top: auto; text-align: center; padding-top: 20px; }
+        .button { display: inline-block; padding: 12px 0px; background: linear-gradient(135deg, #1e88e5, #0d47a1); color: white !important; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 15px; margin: 0; text-align: center; box-shadow: 0 4px 12px rgba(255, 123, 0, 0.25); border: none; transition: transform 0.2s; width: 100%; max-width: 280px; }
+        .button:hover { transform: translateY(-2px); }
+        .expiry-date { font-style: italic; color: #e74c3c; font-weight: 600; }
+        .footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; color: #888; border-top: 1px solid #eee; }
+        .signature { font-style: italic; color: #1e88e5; }
+        @media (max-width: 768px) { 
+            .container { margin-left: 10px; margin-right: 10px;} 
+            .content { flex-wrap: wrap; padding: 10px;} 
+            .language-column { flex: 1 1 90%; } 
+            .logo { font-size: 20px;} 
+            .language-title {font-size: 12 }}
+            h2 { font-size: 20px; margin-bottom: 10px;}
+            p { margin-bottom: 5px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">✉️ MailDefender</div>
+        </div>
+        <div class="content">
+            <!-- English -->
+            <div class="language-column">
+                <div class="language-title">🌍 English</div>
+                <h2>Validation Reminder</h2>
+                <p>Hello,</p>
+                <p>We noticed you haven’t validated your email address yet via the <span class="highlight">MailDefender anti-spam system</span>.</p>
+                <p><strong>Your current validation link is still active</strong>. Click the button below to complete the process:</p>
+                <div class="button-container">
+                    <a href="{{ .ValidationUri }}" class="button">✓ Validate with MailDefender</a>
+                </div>
+                <p>This link is valid until <span class="expiry-date">{{ .ExpiryDate }}</span>.</p>
+                <p class="warning">After this date, a new validation link will be generated when you send your next message.</p>
+            </div>
+            <!-- Français -->
+            <div class="language-column">
+                <div class="language-title">🇫🇷 Français</div>
+                <h2>Rappel de validation</h2>
+                <p>Bonjour,</p>
+                <p>Nous avons constaté que vous n’avez pas encore validé votre adresse e-mail via le <span class="highlight">système anti-spam MailDefender</span>.</p>
+                <p><strong>Votre lien de validation actuel est toujours actif</strong>. Cliquez sur le bouton ci-dessous pour finaliser la procédure :</p>
+                <div class="button-container">
+                    <a href="{{ .ValidationUri }}" class="button">✓ Valider avec MailDefender</a>
+                </div>
+                <p>Ce lien est valable jusqu’au <span class="expiry-date">{{ .ExpiryDate }}</span>.</p>
+                <p class="warning">Après cette date, un nouveau lien de validation sera généré lors de votre prochain envoi.</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Best regards,<br>The MailDefender Team</p>
+            <p class="signature">Made with ❤️ by Arnaud DE MATTEIS</p>
+        </div>
+    </div>
+</body>
+</html>
