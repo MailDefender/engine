@@ -209,7 +209,7 @@ func processMessage(inMsg thirdModels.Message) {
 			}
 			httpCode, err := services.SendEmail(services.SendMailIn{
 				To:      []string{senderEmail},
-				Subject: "MOAB - Please confirm your email",
+				Subject: fmt.Sprintf("Re: %s", msg.Subject),
 				Body:    mailOutContent.String(),
 			})
 			logger.WithField("http_status", httpCode).WithError(err).Info("confirmation email sent")

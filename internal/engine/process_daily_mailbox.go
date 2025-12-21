@@ -11,7 +11,7 @@ import (
 )
 
 func ProcessDailyMailbox() error {
-	// Get all email from "INBOX.MOAB._Daily"
+	// Get all email from "INBOX.MailDefender._Daily"
 	messages, _, err := services.FetchEmails(services.FetchEmailsIn{
 		Mailbox: string(constants.DailyMailbox),
 	})

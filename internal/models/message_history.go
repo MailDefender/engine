@@ -33,5 +33,5 @@ func GetMessageHistoryBetweenDates(tx *gorm.DB, from, to time.Time) ([]MessageHi
 }
 
 func (m MessageHistory) IsPending() bool {
-	return strings.Contains(m.Destination, "MOAB._Pending")
+	return strings.Contains(m.Destination, "_Pending")
 }
