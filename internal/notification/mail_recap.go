@@ -66,6 +66,10 @@ func (w messageWrapper) Source() string {
 func SendMailRecap(tx *gorm.DB, from, to time.Time) error {
 	operations, err := models.GetMessageHistoryBetweenDates(tx, from, to)
 	if err != nil {
+		logrus.WithError(err).WithFields(logrus.Fields{
+			"from": from,
+			"to":   to,
+		}).Error("cannot get message history between dates")
 		return err
 	}
 
@@ -85,6 +89,7 @@ func SendMailRecap(tx *gorm.DB, from, to time.Time) error {
 		if w.badgeType() == "pending" {
 			token, err := models.GetLastAdminValidationTokenByEmail(tx, val.Message.SenderEmail)
 			if errors.Is(err, gorm.ErrRecordNotFound) || token.ExpiryDate.Before(time.Now()) {
+				logrus.WithField("sender_email", val.Message.SenderEmail).Info("generating admin validation token for this sender")
 				token = models.NewValidationToken(val.Message.SenderEmail, true)
 				if err := models.SaveValidationToken(tx, &token); err != nil {
 					logrus.WithError(err).Fatal("cannot create token for this sender")
@@ -112,7 +117,7 @@ func SendMailRecap(tx *gorm.DB, from, to time.Time) error {
 
 	var recapOut bytes.Buffer
 	if err := templates.OperationRecapTemplate().Execute(&recapOut, recapIn); err != nil {
-		fmt.Print(err)
+		logrus.WithError(err).Error("cannot execute operation recap template")
 		return err
 	}
 
@@ -123,6 +128,7 @@ func SendMailRecap(tx *gorm.DB, from, to time.Time) error {
 	})
 
 	if err == nil {
+		logrus.Info("daily recap sent, saving notification history to database")
 		models.SaveNotification(tx, &models.Notification{
 			Type:      models.DailyRecap,
 			Channel:   models.EmailChannel,
@@ -131,5 +137,6 @@ func SendMailRecap(tx *gorm.DB, from, to time.Time) error {
 		})
 	}
 
+	logrus.WithError(err).WithField("recipient", configuration.DailyRecapRecipient()).Error("cannot send daily recap")
 	return err
 }
