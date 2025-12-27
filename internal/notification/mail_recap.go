@@ -135,6 +135,7 @@ func SendMailRecap(tx *gorm.DB, from, to time.Time) error {
 			Recipient: configuration.DailyRecapRecipient(),
 			Content:   recapOut.String(),
 		})
+		return nil
 	}
 
 	logrus.WithError(err).WithField("recipient", configuration.DailyRecapRecipient()).Error("cannot send daily recap")
